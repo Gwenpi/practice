@@ -1,13 +1,16 @@
 
 #include"server.h"
+#include <thread>
 
-int main() {
+
+int main()
+{
 	
 	Server server;
-	while (true)
-	{
-		server.sendDataToOther();
-	}
+	std::thread t1(&Server::acceptConnect,&server);
+	std::thread t2(&Server::sendData,&server);
+	t1.join();
+	t2.join();
 
 
 	return 0;
